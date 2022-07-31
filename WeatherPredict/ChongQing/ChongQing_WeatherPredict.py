@@ -25,24 +25,26 @@ def main(url,i):
     #写入文件
     w.write_to_file(dates,maxs,mins,i)
 
-def make_url(i):
-    '''制作每月的url'''
+def main_and_print_Progress_bar(i,pbar):
+    '''运行main函数并打印进度条'''
     url = 'http://www.tianqihoubao.com/lishi/chongqing/month/20220'+str(i)+'.html'
-    return url
+    main(url,i)
+    # 延时2秒
+    time.sleep(2)
+    # 进度条更新
+    pbar.update(1)
 
 
 if __name__ == '__main__':
+    year_number = 1
     start_month = 1
     end_month = 7
+
     #打印进度条
     pbar = tqdm(total=end_month, desc="Count", unit="times")
 
-    #制作每月的url
     for i in range(start_month,end_month+1):
-        url = make_url(i)
-        main(url, i)
-        time.sleep(1)  # 延时1秒
-        pbar.update(1)  # 进度条更新
+        main_and_print_Progress_bar(i,pbar)
 
     pbar.close()
 
